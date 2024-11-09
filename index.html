@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Go on a Date with Me?</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f9f0ff;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+      background-color: #ffecf0;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      position: absolute;
+      transition: all 0.3s ease;
+    }
+    h1 {
+      color: #ff6b6b;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .yes-btn {
+      background-color: #6bcf6b;
+    }
+    .yes-btn:hover {
+      background-color: #4ab04a;
+    }
+    .no-btn {
+      background-color: #ff6b6b;
+    }
+    .no-btn:hover {
+      background-color: #ff4949;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="promptContainer">
+  <h1 id="promptText">Will you go on a date with me? 💖</h1>
+  <button class="yes-btn" onclick="showDate()">Yes</button>
+  <button class="no-btn" onclick="movePrompt()">No</button>
+  <div id="result"></div>
+</div>
+
+<script>
+  const messages = [
+    "Come on, say yes! 😊", "Don't be shy, just say yes! 💕", "A date would be lovely, don't you think? 🥰",
+    "How about giving it a try? 😇", "You know you want to say yes! 😘", "Think of all the fun we’ll have! 🎉",
+    "Why not? Life's too short! 🌟", "It’s destiny! Just say yes! 🌠", "Imagine all the laughs we’ll share! 😂",
+    "One little 'yes' won’t hurt! 😊", "You know you want to! 💓", "Just one date, what do you say? 😉",
+    "Think of all the memories we’ll create! 📸", "Let’s make today unforgettable! 💖", "Just say yes for an adventure! 🌍",
+    "I promise it'll be fun! 🥳", "I dare you to say yes! 😜", "Trust me, you won’t regret it! 💘",
+    "This could be the start of something amazing! ✨", "Take a chance! 😎", "YOLO, right? 🕶️",
+    "Say yes, and let’s make magic happen! 🪄", "A date with me = unforgettable! 🎆", "You know you’re curious! 👀",
+    "Just one little yes! 💌", "Don't say no again! 😅", "What do you have to lose? 😉", "Adventures await! 🌄",
+    "Just say yes and see where it leads! 🌈", "The stars have aligned for this! 🌌", "You deserve a fun date! 🎉",
+    "It’ll be worth it, I promise! 🥂", "Say yes, we’ll make it epic! 🚀", "One yes = infinite possibilities! ✨",
+    "Let's create our own little story! 📖", "Saying yes could be the best choice today! 😊", "I’ll make it worth your while! 😁",
+    "One date – come on, just one! 🍀", "You know you want to! 💕", "Make today special, say yes! 🌹",
+    "Just a small yes for a big adventure! 🗺️", "Why not? It'll be fun! 🥳", "Let's go make memories! 🎈",
+    "I'm just waiting for that yes! 💌", "Think of it as a mini-adventure! 🌄", "Just say yes and let the fun begin! 🎉",
+    "Who says no to fun? 😊", "Imagine the possibilities! ✨", "Let’s start something unforgettable! ❤️",
+    "Say yes, and let's see where it goes! 🌅", "How about one little yes? 💝", "This could be the best decision today! 🌞",
+    "I have a feeling it'll be worth it! 🍃", "Just say yes – it'll be legendary! 💫", "It's just a yes away! 😉",
+    "Let’s make it a day to remember! 📅", "Say yes, and let's make some magic! 🪄", "You + Me = Epic day! 🌈",
+    "Who knows? It could be amazing! 💫", "Say yes, it’s as simple as that! 💌", "One little yes = Big adventure! 🚀",
+    "Can’t wait to hear that yes! 😁", "Say yes for an awesome time! 😎", "Just one yes, just one! 💕",
+    "Think of all the laughs! 😂", "Let's make today a day to remember! 🎉", "It’s meant to be – just say yes! 🌠",
+    "One yes could change everything! 🌍", "This could be the start of something great! 🌟", "Just imagine the memories! 🥰",
+    "It’s a date – just say yes! 😊", "Who knows what fun awaits! 🎉", "Saying yes could be amazing! 💓",
+    "Let's make some memories! 📸", "Take a chance and say yes! 😇", "Say yes for an unforgettable day! 💘",
+    "I double dare you to say yes! 😜", "Say yes, let’s make it special! 🎆", "One yes, endless possibilities! 🌅",
+    "This could be the start of something wonderful! 💫", "Imagine the fun we’ll have! 😊", "Say yes, it’s worth it! 💖",
+    "Let’s make today unforgettable! 🌞", "Why wait? Just say yes! 😉", "One yes = Lots of laughs! 😁",
+    "I bet you’ll have a blast! 🎈", "Come on, just one yes! 😘", "I promise you won’t regret it! 💕",
+    "Let’s make it a day to remember! 🌟", "Say yes, you know you want to! 💌", "One yes is all it takes! 🌠",
+    "How about giving it a try? 🥰", "Just one yes, let’s make it amazing! 🚀", "Make today epic with a yes! 🌅",
+    "Life's too short to say no! 🌈", "A little yes could make a big difference! ✨", "Just say yes and enjoy! 😊",
+    "Say yes, let’s make magic! 💘", "Say yes for something unforgettable! 🌌", "You won’t regret a yes! 💫",
+    "Come on, just say yes already! 😊"
+  ];
+
+  function showDate() {
+    const date = new Date();
+    const dateString = `Awesome! Let's meet on ${date.toLocaleDateString()} at ${date.toLocaleTimeString()}!`;
+    document.getElementById("result").innerText = dateString;
+  }
+
+  function movePrompt() {
+    const promptContainer = document.getElementById("promptContainer");
+    const randomX = Math.floor(Math.random() * (window.innerWidth - promptContainer.offsetWidth));
+    const randomY = Math.floor(Math.random() * (window.innerHeight - promptContainer.offsetHeight));
+    promptContainer.style.left = `${randomX}px`;
+    promptContainer.style.top = `${randomY}px`;
+
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+    document.getElementById("promptText").innerText = randomMessage;
+  }
+</script>
+</body>
+</html>
