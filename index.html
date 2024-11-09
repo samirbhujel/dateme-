@@ -13,6 +13,7 @@
       background-color: #f9f0ff;
       font-family: Arial, sans-serif;
       overflow: hidden;
+      position: relative;
     }
     .container {
       text-align: center;
@@ -22,6 +23,7 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       position: absolute;
       transition: all 0.3s ease;
+      z-index: 1;
     }
     h1 {
       color: #ff6b6b;
@@ -52,6 +54,39 @@
       font-size: 1.2em;
       color: #333;
     }
+
+    /* Heart Image Floating Background */
+    .heart {
+      position: absolute;
+      width: 100px; /* Adjust the size if necessary */
+      height: 70px; /* Adjust the size if necessary */
+      background-size: cover;
+      animation: moveHearts 10s linear infinite, scaleHeart 2s infinite alternate;
+      opacity: 0;
+    }
+
+
+    @keyframes moveHearts {
+      0% {
+        left: 0;
+        top: 100%;
+        opacity: 1;
+      }
+      100% {
+        left: 100%;
+        top: 0;
+        opacity: 0;
+      }
+    }
+
+    @keyframes scaleHeart {
+      0% {
+        transform: scale(0.5);
+      }
+      100% {
+        transform: scale(1.5);
+      }
+    }
   </style>
 </head>
 <body>
@@ -61,6 +96,17 @@
   <button class="no-btn" onclick="movePrompt()">No</button>
   <div id="result"></div>
 </div>
+
+<!-- Heart images floating in the background -->
+<div class="heart" style="top: 10%; left: 10%; background-image: url('img/heart.png');"></div>
+<div class="heart" style="top: 20%; left: 25%; background-image: url('img/heart.png');"></div>
+<div class="heart" style="top: 30%; left: 50%; background-image: url('img/heart.png');"></div>
+<div class="heart" style="top: 40%; left: 70%; background-image: url('img/heart.png');"></div>
+<div class="heart" style="top: 50%; left: 30%; background-image: url('img/heart.png');"></div>
+<div class="heart" style="top: 60%; left: 80%; background-image: url('img/heart.png');"></div>
+<div class="heart" style="top: 80%; left: 15%; background-image: url('img/heart.png');"></div>
+<div class="heart" style="top: 90%; left: 55%; background-image: url('img/heart.png');"></div>
+<div class="heart" style="top: 100%; left: 55%; background-image: url('img/heart.png');"></div>
 
 <script>
   const messages = [
